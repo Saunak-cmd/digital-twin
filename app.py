@@ -6,6 +6,8 @@ from styles import CSS, JS, EXAMPLES
 from dotenv import load_dotenv
 import gradio as gr
 
+print("App file loaded", flush=True)
+
 load_dotenv(override=True)
 
 MODEL_NAME = "gemini-2.5-flash"
@@ -32,11 +34,20 @@ def chat(message, history):
 
 
 if __name__ == "__main__":
-    gr.ChatInterface(
+    print("Starting Digital Twin...", flush=True)
+
+    demo = gr.ChatInterface(
         chat,
         examples=EXAMPLES,
         title="Digital Twin",
         description="Talk to my AI twin about my career",
         chatbot=gr.Chatbot(show_label=False),
-    ).launch(css=CSS, js=JS, theme=gr.themes.Base(), server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860))
+    )
+
+    demo.launch(
+        css=CSS,
+        js=JS,
+        theme=gr.themes.Base(),
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860)),
     )
